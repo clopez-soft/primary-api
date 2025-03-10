@@ -26,6 +26,7 @@ const API_KEY_PROD = "PROD1212121SA";
           synchronize: false,
           autoLoadEntities: true,
           cache: false,
+          ssl: { rejectUnauthorized: false },
           // cache: {
           //     type: "database",
           //     tableName: '_query-result-cache'
@@ -53,6 +54,7 @@ const API_KEY_PROD = "PROD1212121SA";
           database,
           password,
           port,
+          ssl: { rejectUnauthorized: false },
         });
         client.connect();
         return client;

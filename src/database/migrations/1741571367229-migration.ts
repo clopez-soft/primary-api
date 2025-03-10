@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class Migration1741402631294 implements MigrationInterface {
-    name = 'Migration1741402631294'
+export class Migration1741571367229 implements MigrationInterface {
+    name = 'Migration1741571367229'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE TABLE "base" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" text, "slug" text, "created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "created_by" uuid, "updated_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "updated_by" uuid, "deleted_at" TIMESTAMP WITH TIME ZONE, "deleted_by" uuid, "active" boolean NOT NULL DEFAULT true, "version" integer NOT NULL, CONSTRAINT "PK_ee39d2f844e458c187af0e5383f" PRIMARY KEY ("id"))`);
@@ -9,14 +9,6 @@ export class Migration1741402631294 implements MigrationInterface {
         await queryRunner.query(`CREATE INDEX "IDX_76226ec69fac84a82b61d09707" ON "base" ("name", "active") `);
         await queryRunner.query(`CREATE INDEX "IDX_582051e9285c2ceaae5b376bdc" ON "base" ("slug", "active") `);
         await queryRunner.query(`CREATE INDEX "IDX_3d75f1bc6a3ce54be8c13e7a50" ON "base" ("id", "active") `);
-        await queryRunner.query(`CREATE TYPE "public"."political_alliance_level_enum" AS ENUM('president', 'mayor', 'congress')`);
-        await queryRunner.query(`CREATE TABLE "political_alliance" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" text, "slug" text, "created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "created_by" uuid, "updated_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "updated_by" uuid, "deleted_at" TIMESTAMP WITH TIME ZONE, "deleted_by" uuid, "active" boolean NOT NULL DEFAULT true, "version" integer NOT NULL, "code" text NOT NULL, "description" text, "level" "public"."political_alliance_level_enum" NOT NULL DEFAULT 'president', "movimientos_internos" text array, "image_url" character varying(1000), CONSTRAINT "PK_053c7deaffff3b294273f277d0f" PRIMARY KEY ("id"))`);
-        await queryRunner.query(`CREATE INDEX "IDX_bc4a5ae9ef6b0615d765dc7ba4" ON "political_alliance" ("id", "deleted_at") `);
-        await queryRunner.query(`CREATE INDEX "IDX_d098ae4c765b57009927f452ea" ON "political_alliance" ("name", "active") `);
-        await queryRunner.query(`CREATE INDEX "IDX_d26c02befb99cabd5673c96be1" ON "political_alliance" ("slug", "active") `);
-        await queryRunner.query(`CREATE INDEX "IDX_22e46c10c8fc60eb7d0d72c892" ON "political_alliance" ("id", "active") `);
-        await queryRunner.query(`CREATE INDEX "IDX_6eaaf390028a6a60145feb319f" ON "political_alliance" ("level", "active") `);
-        await queryRunner.query(`CREATE INDEX "IDX_634adc39d990e2ee8d7e5af178" ON "political_alliance" ("code", "active") `);
         await queryRunner.query(`CREATE TYPE "public"."sec_role_code_enum" AS ENUM('end_user', 'digitizer', 'supervisor', 'admin', 'root')`);
         await queryRunner.query(`CREATE TABLE "sec_role" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" text, "slug" text, "created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "created_by" uuid, "updated_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "updated_by" uuid, "deleted_at" TIMESTAMP WITH TIME ZONE, "deleted_by" uuid, "active" boolean NOT NULL DEFAULT true, "version" integer NOT NULL, "code" "public"."sec_role_code_enum" NOT NULL DEFAULT 'end_user', "access_level" smallint NOT NULL DEFAULT '1', "description" character varying(400), CONSTRAINT "UQ_356251e6678347e071dd2e46f41" UNIQUE ("access_level"), CONSTRAINT "PK_7ce5d236852398eeb6aa482693d" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_a3e5eae727ed6787e68a62f983" ON "sec_role" ("id", "deleted_at") `);
@@ -30,6 +22,14 @@ export class Migration1741402631294 implements MigrationInterface {
         await queryRunner.query(`CREATE INDEX "IDX_78d7f71c9cff8d30b8f42b62bf" ON "user" ("name", "active") `);
         await queryRunner.query(`CREATE INDEX "IDX_fb5dbeb2a2bbdd05a680822e93" ON "user" ("slug", "active") `);
         await queryRunner.query(`CREATE INDEX "IDX_7627d7401bb02c33e78e07551a" ON "user" ("id", "active") `);
+        await queryRunner.query(`CREATE TYPE "public"."political_alliance_level_enum" AS ENUM('president', 'mayor', 'congress')`);
+        await queryRunner.query(`CREATE TABLE "political_alliance" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" text, "slug" text, "created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "created_by" uuid, "updated_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "updated_by" uuid, "deleted_at" TIMESTAMP WITH TIME ZONE, "deleted_by" uuid, "active" boolean NOT NULL DEFAULT true, "version" integer NOT NULL, "code" text NOT NULL, "description" text, "level" "public"."political_alliance_level_enum" NOT NULL DEFAULT 'president', "movimientos_internos" text array, "image_url" character varying(1000), CONSTRAINT "PK_053c7deaffff3b294273f277d0f" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE INDEX "IDX_bc4a5ae9ef6b0615d765dc7ba4" ON "political_alliance" ("id", "deleted_at") `);
+        await queryRunner.query(`CREATE INDEX "IDX_d098ae4c765b57009927f452ea" ON "political_alliance" ("name", "active") `);
+        await queryRunner.query(`CREATE INDEX "IDX_d26c02befb99cabd5673c96be1" ON "political_alliance" ("slug", "active") `);
+        await queryRunner.query(`CREATE INDEX "IDX_22e46c10c8fc60eb7d0d72c892" ON "political_alliance" ("id", "active") `);
+        await queryRunner.query(`CREATE INDEX "IDX_6eaaf390028a6a60145feb319f" ON "political_alliance" ("level", "active") `);
+        await queryRunner.query(`CREATE INDEX "IDX_634adc39d990e2ee8d7e5af178" ON "political_alliance" ("code", "active") `);
         await queryRunner.query(`CREATE TABLE "movimiento_interno" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" text, "slug" text, "created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "created_by" uuid, "updated_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "updated_by" uuid, "deleted_at" TIMESTAMP WITH TIME ZONE, "deleted_by" uuid, "active" boolean NOT NULL DEFAULT true, "version" integer NOT NULL, "code" text NOT NULL, "description" text, "image_url" character varying(1000), CONSTRAINT "PK_72c9fd2f6579ac7333c8cd9719c" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_6a5b498bac487d0e67847e84c3" ON "movimiento_interno" ("id", "deleted_at") `);
         await queryRunner.query(`CREATE INDEX "IDX_6210287a5a9b28baf4c3faf043" ON "movimiento_interno" ("name", "active") `);
@@ -65,12 +65,6 @@ export class Migration1741402631294 implements MigrationInterface {
         await queryRunner.query(`CREATE INDEX "IDX_d8964107e8bb3fce86aacc1421" ON "candidate" ("box_number", "level") `);
         await queryRunner.query(`CREATE INDEX "IDX_906fb6fab6f8e724e50937689a" ON "candidate" ("movimiento_interno_id", "political_alliance_id") `);
         await queryRunner.query(`CREATE TABLE "sec_token" ("token_id" character varying(40) NOT NULL, "token" character varying(2000) NOT NULL, "active" boolean NOT NULL DEFAULT true, CONSTRAINT "UQ_ed815a95f641177c73e1f6f488c" UNIQUE ("token_id", "active"), CONSTRAINT "PK_2ea849c9f08d815fb6f1ab0b5e6" PRIMARY KEY ("token_id"))`);
-        await queryRunner.query(`CREATE TABLE "sec_role_access" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" text, "slug" text, "created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "created_by" uuid, "updated_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "updated_by" uuid, "deleted_at" TIMESTAMP WITH TIME ZONE, "deleted_by" uuid, "active" boolean NOT NULL DEFAULT true, "version" integer NOT NULL, "access_code" character varying(100) NOT NULL DEFAULT '', "role_id" uuid, CONSTRAINT "PK_c2c6fba076fd226c9203e01dcda" PRIMARY KEY ("id"))`);
-        await queryRunner.query(`CREATE INDEX "IDX_250941c170b4faa17fc69dff21" ON "sec_role_access" ("id", "deleted_at") `);
-        await queryRunner.query(`CREATE INDEX "IDX_b10d10660ed9cdc41a8197b8fb" ON "sec_role_access" ("name", "active") `);
-        await queryRunner.query(`CREATE INDEX "IDX_2b3557d78b8e293518151a9b06" ON "sec_role_access" ("slug", "active") `);
-        await queryRunner.query(`CREATE INDEX "IDX_88c796736a6b633a2321a06a66" ON "sec_role_access" ("id", "active") `);
-        await queryRunner.query(`CREATE INDEX "IDX_3f1fa0ad967706dffcd2c1f07d" ON "sec_role_access" ("role_id", "access_code") `);
         await queryRunner.query(`CREATE TABLE "sec_permission" ("id" character varying(100) NOT NULL DEFAULT '', "access_code" character varying(1000) NOT NULL DEFAULT '', "description" character varying(100) NOT NULL DEFAULT '', "parent_id" character varying(100) DEFAULT '', "active" boolean NOT NULL DEFAULT true, "version" integer NOT NULL, CONSTRAINT "UQ_02909e67d313f126918991668cd" UNIQUE ("access_code", "parent_id", "active"), CONSTRAINT "PK_5ac8c6adec24df3227f85818391" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_9b6321db5cbe65c9a97557da5a" ON "sec_permission" ("access_code", "active") `);
         await queryRunner.query(`CREATE TYPE "public"."voting_center_area_enum" AS ENUM('urban', 'rural')`);
@@ -98,6 +92,12 @@ export class Migration1741402631294 implements MigrationInterface {
         await queryRunner.query(`CREATE INDEX "IDX_c67b8fa2b09b9f726b9b508c10" ON "record" ("number", "level") `);
         await queryRunner.query(`CREATE INDEX "IDX_143c94862dac6a919e58ef8845" ON "record" ("jrv_id", "level") `);
         await queryRunner.query(`CREATE INDEX "IDX_005444cf0cdf7bd8634e835802" ON "record" ("level", "active") `);
+        await queryRunner.query(`CREATE TABLE "sec_role_access" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" text, "slug" text, "created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "created_by" uuid, "updated_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "updated_by" uuid, "deleted_at" TIMESTAMP WITH TIME ZONE, "deleted_by" uuid, "active" boolean NOT NULL DEFAULT true, "version" integer NOT NULL, "access_code" character varying(100) NOT NULL DEFAULT '', "role_id" uuid, CONSTRAINT "PK_c2c6fba076fd226c9203e01dcda" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE INDEX "IDX_250941c170b4faa17fc69dff21" ON "sec_role_access" ("id", "deleted_at") `);
+        await queryRunner.query(`CREATE INDEX "IDX_b10d10660ed9cdc41a8197b8fb" ON "sec_role_access" ("name", "active") `);
+        await queryRunner.query(`CREATE INDEX "IDX_2b3557d78b8e293518151a9b06" ON "sec_role_access" ("slug", "active") `);
+        await queryRunner.query(`CREATE INDEX "IDX_88c796736a6b633a2321a06a66" ON "sec_role_access" ("id", "active") `);
+        await queryRunner.query(`CREATE INDEX "IDX_3f1fa0ad967706dffcd2c1f07d" ON "sec_role_access" ("role_id", "access_code") `);
         await queryRunner.query(`CREATE TABLE "record_detail" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" text, "slug" text, "created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "created_by" uuid, "updated_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "updated_by" uuid, "deleted_at" TIMESTAMP WITH TIME ZONE, "deleted_by" uuid, "active" boolean NOT NULL DEFAULT true, "version" integer NOT NULL, "number_box" numeric NOT NULL DEFAULT '0', "votes" numeric NOT NULL DEFAULT '0', "record_id" uuid, "movimiento_interno_id" uuid, "political_alliance_id" uuid, "candidate_id" uuid, CONSTRAINT "PK_c47637bdd89e3055dec6573d77c" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_d2acbaa51ad723bb4bef1769e3" ON "record_detail" ("id", "deleted_at") `);
         await queryRunner.query(`CREATE INDEX "IDX_dc015da73b9172891c80043cfd" ON "record_detail" ("name", "active") `);
@@ -123,6 +123,8 @@ export class Migration1741402631294 implements MigrationInterface {
         await queryRunner.query(`CREATE INDEX "IDX_2d38bacad8a3220627fb948820" ON "jrv_member" ("id", "active") `);
         await queryRunner.query(`CREATE INDEX "IDX_761eb390cc6970e0c86618fb38" ON "jrv_member" ("position_id", "active") `);
         await queryRunner.query(`CREATE INDEX "IDX_fff4d0ddb7c5dd3ecfc140753d" ON "jrv_member" ("jrv_id", "active") `);
+        await queryRunner.query(`CREATE TABLE "file_public" ("id" SERIAL NOT NULL, "url" character varying NOT NULL, "key" character varying NOT NULL, CONSTRAINT "PK_d0ee3ef4ad06724c1c17e7558af" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE INDEX "IDX_f3bc218cb16778621f5d19dffe" ON "file_public" ("key") `);
         await queryRunner.query(`CREATE TYPE "public"."ballot_level_enum" AS ENUM('president', 'mayor', 'congress')`);
         await queryRunner.query(`CREATE TABLE "ballot" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" text, "slug" text, "created_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "created_by" uuid, "updated_at" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(), "updated_by" uuid, "deleted_at" TIMESTAMP WITH TIME ZONE, "deleted_by" uuid, "active" boolean NOT NULL DEFAULT true, "version" integer NOT NULL, "level" "public"."ballot_level_enum" NOT NULL DEFAULT 'president', "marks" numeric NOT NULL DEFAULT '1', "country_id" uuid, "department_id" uuid, "municipality_id" uuid, CONSTRAINT "PK_20adac0e902c60e62fcb6f4cf9c" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_f69e911cdd17af49816fe71dec" ON "ballot" ("id", "deleted_at") `);
@@ -142,8 +144,6 @@ export class Migration1741402631294 implements MigrationInterface {
         await queryRunner.query(`CREATE INDEX "IDX_7f55d5a548b7747530200e572a" ON "ballot_detail" ("political_alliance_id", "active") `);
         await queryRunner.query(`CREATE INDEX "IDX_2fd773d15f3279315306c341cf" ON "ballot_detail" ("movimiento_interno_id", "active") `);
         await queryRunner.query(`CREATE INDEX "IDX_1d7e65f8f7198ec9d3ec2ae3f0" ON "ballot_detail" ("ballot_id", "active") `);
-        await queryRunner.query(`CREATE TABLE "file_public" ("id" SERIAL NOT NULL, "url" character varying NOT NULL, "key" character varying NOT NULL, CONSTRAINT "PK_d0ee3ef4ad06724c1c17e7558af" PRIMARY KEY ("id"))`);
-        await queryRunner.query(`CREATE INDEX "IDX_f3bc218cb16778621f5d19dffe" ON "file_public" ("key") `);
         await queryRunner.query(`ALTER TABLE "user" ADD CONSTRAINT "FK_fb2e442d14add3cefbdf33c4561" FOREIGN KEY ("role_id") REFERENCES "sec_role"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "department" ADD CONSTRAINT "FK_847ff6a204477e6d3355186618a" FOREIGN KEY ("country_id") REFERENCES "country"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "municipality" ADD CONSTRAINT "FK_ef206b4e9d45595ebf259352342" FOREIGN KEY ("department_id") REFERENCES "department"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
@@ -152,10 +152,10 @@ export class Migration1741402631294 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "candidate" ADD CONSTRAINT "FK_0a781f2e049ceb1de051565f574" FOREIGN KEY ("country_id") REFERENCES "country"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "candidate" ADD CONSTRAINT "FK_33f8dfb1171509682187f22c054" FOREIGN KEY ("department_id") REFERENCES "department"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "candidate" ADD CONSTRAINT "FK_6c563cbecc8a7f5a99590cea571" FOREIGN KEY ("municipality_id") REFERENCES "municipality"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
-        await queryRunner.query(`ALTER TABLE "sec_role_access" ADD CONSTRAINT "FK_07cf362d4c4be4be6055eb76acd" FOREIGN KEY ("role_id") REFERENCES "sec_role"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "voting_center" ADD CONSTRAINT "FK_c2731c0a969cd68a10883a9a0c7" FOREIGN KEY ("municipality_id") REFERENCES "municipality"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "jrv" ADD CONSTRAINT "FK_b741b247a96eb49f413435919fa" FOREIGN KEY ("voting_center_id") REFERENCES "voting_center"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "record" ADD CONSTRAINT "FK_f966b137ba2d5a1da84a4370b25" FOREIGN KEY ("jrv_id") REFERENCES "jrv"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "sec_role_access" ADD CONSTRAINT "FK_07cf362d4c4be4be6055eb76acd" FOREIGN KEY ("role_id") REFERENCES "sec_role"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "record_detail" ADD CONSTRAINT "FK_292856d4c3bf71d603f13dc1117" FOREIGN KEY ("record_id") REFERENCES "record"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "record_detail" ADD CONSTRAINT "FK_2e542494132d29be424de05a6b1" FOREIGN KEY ("movimiento_interno_id") REFERENCES "movimiento_interno"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
         await queryRunner.query(`ALTER TABLE "record_detail" ADD CONSTRAINT "FK_1810bc8cb28e90892feb8a9e151" FOREIGN KEY ("political_alliance_id") REFERENCES "political_alliance"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
@@ -187,10 +187,10 @@ export class Migration1741402631294 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "record_detail" DROP CONSTRAINT "FK_1810bc8cb28e90892feb8a9e151"`);
         await queryRunner.query(`ALTER TABLE "record_detail" DROP CONSTRAINT "FK_2e542494132d29be424de05a6b1"`);
         await queryRunner.query(`ALTER TABLE "record_detail" DROP CONSTRAINT "FK_292856d4c3bf71d603f13dc1117"`);
+        await queryRunner.query(`ALTER TABLE "sec_role_access" DROP CONSTRAINT "FK_07cf362d4c4be4be6055eb76acd"`);
         await queryRunner.query(`ALTER TABLE "record" DROP CONSTRAINT "FK_f966b137ba2d5a1da84a4370b25"`);
         await queryRunner.query(`ALTER TABLE "jrv" DROP CONSTRAINT "FK_b741b247a96eb49f413435919fa"`);
         await queryRunner.query(`ALTER TABLE "voting_center" DROP CONSTRAINT "FK_c2731c0a969cd68a10883a9a0c7"`);
-        await queryRunner.query(`ALTER TABLE "sec_role_access" DROP CONSTRAINT "FK_07cf362d4c4be4be6055eb76acd"`);
         await queryRunner.query(`ALTER TABLE "candidate" DROP CONSTRAINT "FK_6c563cbecc8a7f5a99590cea571"`);
         await queryRunner.query(`ALTER TABLE "candidate" DROP CONSTRAINT "FK_33f8dfb1171509682187f22c054"`);
         await queryRunner.query(`ALTER TABLE "candidate" DROP CONSTRAINT "FK_0a781f2e049ceb1de051565f574"`);
@@ -199,8 +199,6 @@ export class Migration1741402631294 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "municipality" DROP CONSTRAINT "FK_ef206b4e9d45595ebf259352342"`);
         await queryRunner.query(`ALTER TABLE "department" DROP CONSTRAINT "FK_847ff6a204477e6d3355186618a"`);
         await queryRunner.query(`ALTER TABLE "user" DROP CONSTRAINT "FK_fb2e442d14add3cefbdf33c4561"`);
-        await queryRunner.query(`DROP INDEX "public"."IDX_f3bc218cb16778621f5d19dffe"`);
-        await queryRunner.query(`DROP TABLE "file_public"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_1d7e65f8f7198ec9d3ec2ae3f0"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_2fd773d15f3279315306c341cf"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_7f55d5a548b7747530200e572a"`);
@@ -220,6 +218,8 @@ export class Migration1741402631294 implements MigrationInterface {
         await queryRunner.query(`DROP INDEX "public"."IDX_f69e911cdd17af49816fe71dec"`);
         await queryRunner.query(`DROP TABLE "ballot"`);
         await queryRunner.query(`DROP TYPE "public"."ballot_level_enum"`);
+        await queryRunner.query(`DROP INDEX "public"."IDX_f3bc218cb16778621f5d19dffe"`);
+        await queryRunner.query(`DROP TABLE "file_public"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_fff4d0ddb7c5dd3ecfc140753d"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_761eb390cc6970e0c86618fb38"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_2d38bacad8a3220627fb948820"`);
@@ -245,6 +245,12 @@ export class Migration1741402631294 implements MigrationInterface {
         await queryRunner.query(`DROP INDEX "public"."IDX_dc015da73b9172891c80043cfd"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_d2acbaa51ad723bb4bef1769e3"`);
         await queryRunner.query(`DROP TABLE "record_detail"`);
+        await queryRunner.query(`DROP INDEX "public"."IDX_3f1fa0ad967706dffcd2c1f07d"`);
+        await queryRunner.query(`DROP INDEX "public"."IDX_88c796736a6b633a2321a06a66"`);
+        await queryRunner.query(`DROP INDEX "public"."IDX_2b3557d78b8e293518151a9b06"`);
+        await queryRunner.query(`DROP INDEX "public"."IDX_b10d10660ed9cdc41a8197b8fb"`);
+        await queryRunner.query(`DROP INDEX "public"."IDX_250941c170b4faa17fc69dff21"`);
+        await queryRunner.query(`DROP TABLE "sec_role_access"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_005444cf0cdf7bd8634e835802"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_143c94862dac6a919e58ef8845"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_c67b8fa2b09b9f726b9b508c10"`);
@@ -272,12 +278,6 @@ export class Migration1741402631294 implements MigrationInterface {
         await queryRunner.query(`DROP TYPE "public"."voting_center_area_enum"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_9b6321db5cbe65c9a97557da5a"`);
         await queryRunner.query(`DROP TABLE "sec_permission"`);
-        await queryRunner.query(`DROP INDEX "public"."IDX_3f1fa0ad967706dffcd2c1f07d"`);
-        await queryRunner.query(`DROP INDEX "public"."IDX_88c796736a6b633a2321a06a66"`);
-        await queryRunner.query(`DROP INDEX "public"."IDX_2b3557d78b8e293518151a9b06"`);
-        await queryRunner.query(`DROP INDEX "public"."IDX_b10d10660ed9cdc41a8197b8fb"`);
-        await queryRunner.query(`DROP INDEX "public"."IDX_250941c170b4faa17fc69dff21"`);
-        await queryRunner.query(`DROP TABLE "sec_role_access"`);
         await queryRunner.query(`DROP TABLE "sec_token"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_906fb6fab6f8e724e50937689a"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_d8964107e8bb3fce86aacc1421"`);
@@ -313,6 +313,14 @@ export class Migration1741402631294 implements MigrationInterface {
         await queryRunner.query(`DROP INDEX "public"."IDX_6210287a5a9b28baf4c3faf043"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_6a5b498bac487d0e67847e84c3"`);
         await queryRunner.query(`DROP TABLE "movimiento_interno"`);
+        await queryRunner.query(`DROP INDEX "public"."IDX_634adc39d990e2ee8d7e5af178"`);
+        await queryRunner.query(`DROP INDEX "public"."IDX_6eaaf390028a6a60145feb319f"`);
+        await queryRunner.query(`DROP INDEX "public"."IDX_22e46c10c8fc60eb7d0d72c892"`);
+        await queryRunner.query(`DROP INDEX "public"."IDX_d26c02befb99cabd5673c96be1"`);
+        await queryRunner.query(`DROP INDEX "public"."IDX_d098ae4c765b57009927f452ea"`);
+        await queryRunner.query(`DROP INDEX "public"."IDX_bc4a5ae9ef6b0615d765dc7ba4"`);
+        await queryRunner.query(`DROP TABLE "political_alliance"`);
+        await queryRunner.query(`DROP TYPE "public"."political_alliance_level_enum"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_7627d7401bb02c33e78e07551a"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_fb5dbeb2a2bbdd05a680822e93"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_78d7f71c9cff8d30b8f42b62bf"`);
@@ -326,14 +334,6 @@ export class Migration1741402631294 implements MigrationInterface {
         await queryRunner.query(`DROP INDEX "public"."IDX_a3e5eae727ed6787e68a62f983"`);
         await queryRunner.query(`DROP TABLE "sec_role"`);
         await queryRunner.query(`DROP TYPE "public"."sec_role_code_enum"`);
-        await queryRunner.query(`DROP INDEX "public"."IDX_634adc39d990e2ee8d7e5af178"`);
-        await queryRunner.query(`DROP INDEX "public"."IDX_6eaaf390028a6a60145feb319f"`);
-        await queryRunner.query(`DROP INDEX "public"."IDX_22e46c10c8fc60eb7d0d72c892"`);
-        await queryRunner.query(`DROP INDEX "public"."IDX_d26c02befb99cabd5673c96be1"`);
-        await queryRunner.query(`DROP INDEX "public"."IDX_d098ae4c765b57009927f452ea"`);
-        await queryRunner.query(`DROP INDEX "public"."IDX_bc4a5ae9ef6b0615d765dc7ba4"`);
-        await queryRunner.query(`DROP TABLE "political_alliance"`);
-        await queryRunner.query(`DROP TYPE "public"."political_alliance_level_enum"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_3d75f1bc6a3ce54be8c13e7a50"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_582051e9285c2ceaae5b376bdc"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_76226ec69fac84a82b61d09707"`);
