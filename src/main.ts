@@ -62,6 +62,7 @@ async function bootstrap() {
       }
     },
   });
+  app.enableShutdownHooks(); // Cierra conexiones correctamente
 
   // app.use(graphqlUploadExpress({ maxFileSize: 5 * 1000 * 1000, maxFiles: 10 }));
 
