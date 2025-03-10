@@ -22,6 +22,9 @@ const allowlist = [
   // "http:/localhost:8080/",
   "http://localhost:8080",
   "http://127.0.0.1:4173/",
+  "https://primary-count-yoro-app-2roey.ondigitalocean.app/",
+  "https://primary-count-yoro-app-2roey.ondigitalocean.app",
+  "https://primary-count-yoro-api-zzqjk.ondigitalocean.app/graphql",
 ];
 
 async function bootstrap() {
